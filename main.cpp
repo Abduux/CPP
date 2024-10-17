@@ -1,5 +1,4 @@
 #include <iostream>
-#include "Contact.hpp"
 #include "Phonebook.hpp"
 
 int main(int ac, char *argv[])
@@ -10,21 +9,21 @@ int main(int ac, char *argv[])
     //     EXIT   --> quit the app  
 
     Phonebook fb;
-    std::string COMAND;
+    fb.size = 0;
+    std::string input;
     while (1)
     {
         std::cout << "====================" << std::endl;
         std::cout << "ENTER YOUR COMMAND : " << std::endl;
         std::cout << "====================" << std::endl;
-        std::cin >> COMAND;
-        if(COMAND == "ADD")
+        std::cin >> input;
+        if(input == "ADD")
             fb.AddContact();
-        else if (COMAND == "SEARCH")
+        else if (input == "SEARCH")
             fb.SearchContact();
-        else if (COMAND == "EXIT")
+        else if (input == "EXIT" || std::cin.eof())
             fb.Exit();
-        else 
-            std::cout << COMAND <<" Not a Valid Command" << std::endl;
+        std::cin.clear();
         /* code */
     }
     return (0);

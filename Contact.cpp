@@ -9,7 +9,7 @@ void Contact::SetFirstName(std::string new_name)
 
 void Contact::SetLastName(std::string new_lastname)
 {
-    this->FirstName = new_lastname;
+    this->LastName = new_lastname;
 }
 
 void Contact::SetNickName(std::string new_nickname)
