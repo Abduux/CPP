@@ -2,11 +2,11 @@
 
 
 class	Phonebook {
-	public :
+	private :
 		Contact	contacts[8];
 		int 	size;
 
-	int		AddContact();
-	void	SearchContact();
-	void	Exit();
+	public:
+		void	AddContact();
+		void	SearchContact();
 };
