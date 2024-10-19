@@ -1,46 +1,87 @@
 #include "Phonebook.hpp"
 #include <iomanip>
 
-// void PhoneBook::addContact() {
-//     Contact newContact;
-//     std::string input;
-    
-//     std::cout << "Enter first name: ";
-//     std::getline(std::cin, input);
-//     newContact.setFirstName(input);
+Phonebook::Phonebook()
+{
+    this->size = 0;
+}
 
-//     // Repeat for other fields: last name, nickname, etc.
+std::string Format(std::string str)
+{
+    if(str.length() > 10)
+        return (str.substr(0, 9) + ".");
+    return str;
+}
 
-//     // Add contact to the array (replace the oldest if full)
-//     contacts[contactCount % 8] = newContact;
-//     contactCount++;
-// }
+int AllNumbers(std::string str)
+{
+	int i = 0;
+	while(str[i])
+	{
+		if(!std::isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
+std::string removeTaps(std::string str)
+{
+	int i = 0;
+	while(str[i])
+	{
+		if(str[i] == '\t')
+			str[i] = ' ';
+		i++;
+	}
+	return str;
+}
+
+int Phonebook::EmptyData(Contact new_contact)
+{
+    int EmptyField = 0;
+    if(new_contact.GetFirstName().empty() && ++EmptyField )
+        std::cerr << "❌[ERROR] empty first name \n";
+    if(new_contact.GetLastName().empty() && ++EmptyField)
+        std::cerr << "❌[ERROR] empty last name \n";
+    if(new_contact.GetNickName().empty() && ++EmptyField)
+        std::cerr << "❌[ERROR] empty nickname \n";
+    if((!AllNumbers(new_contact.GetPhoneNumber()) && ++EmptyField)  || new_contact.GetPhoneNumber().empty())
+        std::cerr << "❌[ERROR] empty or invalid phone number \n";
+    if(new_contact.GetDarkSecret().empty() && ++EmptyField)
+        std::cerr << "❌[ERROR] empty darkest secret \n";
+    if(EmptyField > 0)
+        return (1);
+    return (0);
+}
 
 void Phonebook::AddContact()     //loop on te informations and save them if valid 
 {
     Contact new_Contact;
-    std::string input = "";
-    std::cout << "ENTER YOUR FIRST NAME : \n";
-    std::getline(std::cin, input);
-    new_Contact.SetFirstName(input);
+    std::string input;
 
-    std::cout << "ENTER YOUR LAST NAME : \n";
-    std::getline(std::cin, input);
-    new_Contact.SetLastName(input);
+    std::cout << "ENTER YOUR FIRST NAME  : ";
+    std::getline(std::cin >> std::ws, input);
+    new_Contact.SetFirstName(removeTaps(input));
 
-    std::cout << "ENTER YOUR NICKNAME : \n";
-    std::getline(std::cin, input);
-    new_Contact.SetNickName(input);
+    std::cout << "ENTER YOUR LAST NAME   : ";
+    std::getline(std::cin >> std::ws, input);
+    new_Contact.SetLastName(removeTaps(input));
 
-    std::cout << "ENTER YOUR PHONENUMBER : \n";
-    std::getline(std::cin, input);
+    std::cout << "ENTER YOUR NICKNAME    : ";
+    std::getline(std::cin>> std::ws, input);
+    new_Contact.SetNickName(removeTaps(input));
+
+    std::cout << "ENTER YOUR PHONENUMBER : ";
+    std::getline(std::cin>> std::ws, input);
     new_Contact.SetPhoneNumber(input);
 
-    std::cout << "ENTER YOUR DARKSHIT : \n";
-    std::getline(std::cin, input);
-    new_Contact.SetDarkSecret(input);
+    std::cout << "ENTER YOUR DARKSHIT    : ";
+    std::getline(std::cin>> std::ws, input);
+    new_Contact.SetDarkSecret(removeTaps(input));
 
+    if(EmptyData(new_Contact))
+        return ;
     contacts[size % 8] = new_Contact;
     size ++ ;
 }
@@ -48,15 +89,51 @@ void Phonebook::AddContact()     //loop on te informations and save them if vali
 void Phonebook::SearchContact()
 {
     int i = 0;
-    std::cout << "|FIRSTNAME |LASTNAME  |NICKNAME  |NUMBER   | DARKEST |" << std::endl;
-    while(i < size) // display all contacts
+    int index = 0;
+
+    if (size == 0)
     {
-        std::cout << std::setw(10) << contacts[i].GetFirstName() << "|";
-        std::cout << std::setw(10) << contacts[i].GetLastName() << "|";
-        std::cout << std::setw(10) << contacts[i].GetNickName() << "|";
-        std::cout << std::setw(10) << contacts[i].GetPhoneNumber() << "|";
-        std::cout << std::setw(10) << contacts[i].GetDarkSecret() << "|" << std::endl;
+        std::cout << "❌[ERROR] No contacts available\n";
+        return ;
+    }
+    std::cout << "|-------------------------------------------|\n";
+    std::cout << "|     INDEX|     FIRST|      LAST|  NICKNAME|\n";
+    std::cout << "|-------------------------------------------|\n";
+    while(i < size && i < 8) // display all contacts
+    {
+        std::cout << "|" << std::setw(10) << i ;
+        std::cout << "|" << std::setw(10) << Format(contacts[i].GetFirstName());
+        std::cout << "|" << std::setw(10) << Format(contacts[i].GetLastName());
+        std::cout << "|" << std::setw(10) << Format(contacts[i].GetNickName())<< "|" << std::endl;
+        std::cout << "|-------------------------------------------|\n";
         i++;
     }
-    // and let the user pick a number to display
+    while (true)
+    {
+        std::cout << "Enter contact index: ";
+        std::cin >> index;
+        if(std::cin.eof())
+            return;
+        if (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cerr << "❌NO CHARACTERS ALLOWED❌\n";
+        }
+        else if (index >= 0 && index < i)
+        {
+			std::cout << "-------------------------------------------\n";
+            std::cout << "✔ First Name     : " << contacts[index].GetFirstName() << std::endl;
+            std::cout << "✔ Last Name      : " << contacts[index].GetLastName() << std::endl;
+            std::cout << "✔ Nick Name      : " << contacts[index].GetNickName() << std::endl;
+            std::cout << "✔ Phone NUmber   : " << contacts[index].GetPhoneNumber() << std::endl;
+            std::cout << "✔ Darkest Secret : " << contacts[index].GetDarkSecret() << std::endl;
+			std::cout << "-------------------------------------------\n";
+			std::cin.clear();
+            return ;
+        }
+        else
+            std::cerr << "❌NOT A VALID INDEX TRY AGAIN :❌\n";
+    }
 }
+
