@@ -1,3 +1,7 @@
+
+#ifndef _CONTACT_HPP
+#define _CONTACT_HPP
+
 #include <iostream>
 
 class Contact {
@@ -22,3 +26,4 @@ class Contact {
 		std::string GetDarkSecret() const;
 };
 
+#endif
