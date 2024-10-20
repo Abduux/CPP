@@ -21,3 +21,4 @@ class Contact {
 		std::string GetNickName() const;
 		std::string GetDarkSecret() const;
 };
+

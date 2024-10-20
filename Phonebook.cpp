@@ -1,6 +1,9 @@
 #include "Phonebook.hpp"
-#include "Utiles.hpp"
 #include <iomanip>
+
+std::string Format(std::string str);
+int AllNumbers(std::string str);
+std::string removeTaps(std::string str);
 
 Phonebook::Phonebook()
 {
@@ -106,4 +109,3 @@ void Phonebook::SearchContact()
             std::cerr << "❌NOT A VALID INDEX TRY AGAIN :❌\n";
     }
 }
-
