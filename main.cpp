@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahraich <ahraich@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/20 11:06:32 by ahraich           #+#    #+#             */
+/*   Updated: 2024/10/20 11:06:58 by ahraich          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <iostream>
 #include "Phonebook.hpp"
 
 int main() {
     Phonebook	pbook;
-    std::string	command;
+    std::string	command = "";
+
     while (command != "EXIT")
 	{
 		std::cout << "\033[32mEnter a command (ADD, SEARCH, EXIT): \033[0m";
