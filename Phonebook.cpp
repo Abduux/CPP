@@ -66,22 +66,32 @@ void Phonebook::AddContact()
 
     std::cout << "ENTER YOUR FIRST NAME  : ";
     std::getline(std::cin >> std::ws, input);
+    if (std::cin.eof())
+        return;
     new_Contact.SetFirstName(removeTaps(input));
 
     std::cout << "ENTER YOUR LAST NAME   : ";
     std::getline(std::cin >> std::ws, input);
+    if (std::cin.eof())
+        return;
     new_Contact.SetLastName(removeTaps(input));
 
     std::cout << "ENTER YOUR NICKNAME    : ";
     std::getline(std::cin>> std::ws, input);
+    if (std::cin.eof())
+        return;
     new_Contact.SetNickName(removeTaps(input));
 
     std::cout << "ENTER YOUR PHONENUMBER : ";
     std::getline(std::cin>> std::ws, input);
+    if (std::cin.eof())
+        return;
     new_Contact.SetPhoneNumber(input);
 
     std::cout << "ENTER YOUR DARKSHIT    : ";
     std::getline(std::cin>> std::ws, input);
+    if (std::cin.eof())
+        return;
     new_Contact.SetDarkSecret(removeTaps(input));
 
     if(EmptyData(new_Contact))
